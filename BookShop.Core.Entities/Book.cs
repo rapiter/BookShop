@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace BookShop.Core.Entities
 {
@@ -16,6 +17,9 @@ namespace BookShop.Core.Entities
         public double Rating { get; set; }
         public String AgeRange { get; set; }
         
+        //Association to Author(s)
+        public virtual ICollection<BookAuthor> AuthorBooks { get; set; }
+
     }
 }
 
