@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using BookShop.Core.Entities;
 
-namespace BookShop.Core.ApplicationService.Implementation
+namespace BookShop.Core.ApplicationService
 {
     public interface IAuthorService
     {

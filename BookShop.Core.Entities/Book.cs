@@ -13,6 +13,7 @@ namespace BookShop.Core.Entities
         public DateTime ReleaseDate { get; set; }
         public int BookID { get; set; }
         public int Pages { get; set; }
+        public double Price { get; set; }
         public String Language { get; set; }
         public double Rating { get; set; }
         public String AgeRange { get; set; }

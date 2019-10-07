@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using BookShop.Core.Entities;
 
-namespace BookShop.Core.ApplicationService.Implementation
+namespace BookShop.Core.ApplicationService
 {
     public interface IBookService
     {
@@ -13,6 +13,7 @@ namespace BookShop.Core.ApplicationService.Implementation
             String publisher,
             DateTime releaseDate,
             int nrOfPages,
+            double price,
             String language,
             Double rating,
             String ageRange);

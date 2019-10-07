@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>netcoreapp2.2</TargetFramework>
@@ -6,10 +6,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\BookShop.Core.Entities\BookShop.Core.Entities.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="ApplicationService\Implementation" />
     </ItemGroup>
 
 </Project>
