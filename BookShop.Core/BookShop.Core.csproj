@@ -5,7 +5,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="DomainService" />
+      <ProjectReference Include="..\BookShop.Core.Entities\BookShop.Core.Entities.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="ApplicationService\Implementation" />
     </ItemGroup>
 
 </Project>
