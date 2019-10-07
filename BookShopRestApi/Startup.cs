@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BookShop.Core.ApplicationService;
+using BookShop.Core.ApplicationService.Implementation;
 using BookShop.Core.DomainService;
 using BookShop.Infrastructure.SQLData;
 using BookShop.Infrastructure.SQLData.Repositories;
@@ -14,65 +16,92 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace BookShopRestApi
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration,IHostingEnvironment env)
-        {
-            Configuration = configuration;
-            Environment = env;
-        }
-
-        public IConfiguration Configuration { get; }
-        public IHostingEnvironment Environment { get; }
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddScoped<IBookRepository, BookRepository>();
-           // services.AddScoped<IOrderRepository, OrderRepository>();
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
-            if (Environment.IsDevelopment())
+       
+            public Startup(IConfiguration configuration, IHostingEnvironment env)
             {
-                services.AddDbContext<BookShopAppContext>(
-                      opt =>
-                      {
-                          opt.UseSqlite("Data Source=PetShopSQLite.db");
-                      });
+                Configuration = configuration;
+                Environment = env;
             }
-            else
-            {
-                // Azure SQL database:
-                services.AddDbContext<BookShopAppContext>(opt =>
-                opt.UseSqlServer(Configuration.GetConnectionString("defaultConnection")));
-            }
-        }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
-        {
-            if (env.IsDevelopment())
+            public IConfiguration Configuration { get; }
+            public IHostingEnvironment Environment { get; }
+            // This method gets called by the runtime. Use this method to add services to the container.
+            public void ConfigureServices(IServiceCollection services)
             {
-                using (var scope = app.ApplicationServices.CreateScope())
+               
+                if (Environment.IsDevelopment())
                 {
+                    services.AddDbContext<BookShopAppContext>(
+                          opt =>
+                          {
+                              opt.UseSqlite("Data Source=BookShopSQLite.db");
+                          });
+                }
+                else
+                {
+                    // Azure SQL database:
+                    services.AddDbContext<BookShopAppContext>(opt =>
+                    opt.UseSqlServer(Configuration.GetConnectionString("defaultConnection")));
+                }
 
-                    var ctx = scope.ServiceProvider.GetService<BookShopAppContext>();
-                    //ctx.Database.EnsureCreated();
-                    DbInitializer.SeedDB(ctx);
+              services.AddScoped<IBookService, BookService>();
+              services.AddScoped<IAuthorService, AuthorService>();
+              services.AddScoped<ICustomerService, CustomerService>();
+              services.AddScoped<IOrderService, OrderService>();
+
+              services.AddScoped<IBookRepository, BookRepository>();
+              services.AddScoped<IAuthorRepository, AuthorRepository>();
+              services.AddScoped<IOrderRepository, OrderRepository>();
+              services.AddScoped<ICustomerRepository, CustomerRepository>();
+
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+                services.AddMvc().AddJsonOptions(options => {
+                    options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+
+                });
+
+            }
+
+            // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+            public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+            {
+                app.UseDeveloperExceptionPage();
+
+                if (env.IsDevelopment())
+                {
+                    using (var scope = app.ApplicationServices.CreateScope())
+                    {
+
+                        var ctx = scope.ServiceProvider.GetService<BookShopAppContext>();
+                        //ctx.Database.EnsureCreated();
+                        DbInitializer.SeedDB(ctx);
+
+                    }
+                    app.UseDeveloperExceptionPage();
 
                 }
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
-            }
+                else
+                {
+                    using (var scope = app.ApplicationServices.CreateScope())
+                    {
 
-            app.UseHttpsRedirection();
-            app.UseMvc();
+                        var ctx = scope.ServiceProvider.GetService<BookShopAppContext>();
+                        ctx.Database.EnsureCreated();
+                        //  DBInitializer.SeedDB(ctx);
+                    }
+                    app.UseHsts();
+                }
+
+                app.UseHttpsRedirection();
+                app.UseMvc();
+            }
         }
-    }
 }

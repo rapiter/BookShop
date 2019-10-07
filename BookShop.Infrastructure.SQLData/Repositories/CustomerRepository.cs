@@ -1,6 +1,8 @@
-﻿namespace BookShop.Infrastructure.SQLData.Repositories
+﻿using BookShop.Core.DomainService;
+
+namespace BookShop.Infrastructure.SQLData.Repositories
 {
-    public class CustomerRepository
+    public class CustomerRepository : ICustomerRepository
     {
         
     }

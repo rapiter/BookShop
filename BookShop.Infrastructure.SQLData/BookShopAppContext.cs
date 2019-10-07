@@ -22,6 +22,7 @@ namespace BookShop.Infrastructure.SQLData
         protected override void OnModelCreating(ModelBuilder modelBuilder)
 
         {
+
             modelBuilder.Entity<BookAuthor>()
                 .HasKey(ba => new { ba.AuthorId, ba.BookId});
 
