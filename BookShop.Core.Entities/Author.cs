@@ -10,7 +10,6 @@ namespace BookShop.Core.Entities
         public int AuthorID { get; set; }
         public String Description { get; set; }
         public DateTime Birthdate { get; set; }
-
         
         //Associaton to Book(s)
         public virtual ICollection<BookAuthor> AuthorBooks { get; set; }
