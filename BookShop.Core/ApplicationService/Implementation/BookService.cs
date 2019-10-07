@@ -41,7 +41,7 @@ namespace BookShop.Core.ApplicationService.Implementation
             throw new NotImplementedException();
         }
 
-        public List<Book> GetBooks()
+        public IEnumerable<Book> GetBooks()
         {
             return BookRepository.GetBooks();
         }

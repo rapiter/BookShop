@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using BookShop.Core.DomainService;
 using BookShop.Core.Entities;
 
@@ -7,8 +8,13 @@ namespace BookShop.Infrastructure.SQLData.Repositories
 {
     public class BookRepository : IBookRepository
     {
-      
 
+        readonly BookShopAppContext context;
+
+        public BookRepository(BookShopAppContext ctx)
+        {
+            context = ctx;
+        }
         public Book CreateBook(Book book)
         {
             throw new NotImplementedException();
@@ -29,9 +35,9 @@ namespace BookShop.Infrastructure.SQLData.Repositories
             throw new NotImplementedException();
         }
 
-        public List<Book> GetBooks()
+        public IEnumerable<Book> GetBooks()
         {
-            throw new NotImplementedException();
+            return context.Books.ToList();
         }
     }
 }

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -32,6 +33,21 @@ namespace BookShopRestApi
             services.AddScoped<IBookRepository, BookRepository>();
            // services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            if (Environment.IsDevelopment())
+            {
+                services.AddDbContext<BookShopAppContext>(
+                      opt =>
+                      {
+                          opt.UseSqlite("Data Source=PetShopSQLite.db");
+                      });
+            }
+            else
+            {
+                // Azure SQL database:
+                services.AddDbContext<BookShopAppContext>(opt =>
+                opt.UseSqlServer(Configuration.GetConnectionString("defaultConnection")));
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,7 +60,7 @@ namespace BookShopRestApi
 
                     var ctx = scope.ServiceProvider.GetService<BookShopAppContext>();
                     //ctx.Database.EnsureCreated();
-                    //DBInitializer.SeedDB(ctx);
+                    DbInitializer.SeedDB(ctx);
 
                 }
                 app.UseDeveloperExceptionPage();

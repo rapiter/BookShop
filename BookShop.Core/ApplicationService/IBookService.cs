@@ -22,6 +22,6 @@ namespace BookShop.Core.ApplicationService
         Book Delete(Book book);
         Book Update(Book bookUpdate);
         Book ReadyById(int id);
-        List<Book> GetBooks();
+        IEnumerable<Book> GetBooks();
     }
 }

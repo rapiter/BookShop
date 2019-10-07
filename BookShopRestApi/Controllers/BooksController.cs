@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using BookShop.Core.ApplicationService;
 using BookShop.Core.ApplicationService.Implementation;
 using BookShop.Core.Entities;
@@ -17,10 +18,10 @@ namespace BookShopRestApi.Controllers
         }
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<List<Book>>> Get()
+        public ActionResult<IEnumerable<Book>> Get()
         {
-         //   return bookService.GetBooks();
-         return null;
+            return bookService.GetBooks().ToList();
+
         }
 
         // GET api/values/5

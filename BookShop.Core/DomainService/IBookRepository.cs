@@ -10,7 +10,7 @@ namespace BookShop.Core.DomainService
             Book Delete(Book book);
             Book Update(Book bookUpdate);
             Book ReadyById(int id);
-            List<Book> GetBooks();
+            IEnumerable<Book> GetBooks();
         
     }
 }
