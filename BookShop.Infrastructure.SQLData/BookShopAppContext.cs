@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using BookShop.Core.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookShop.Infrastructure.SQLData
 {
@@ -10,6 +11,15 @@ namespace BookShop.Infrastructure.SQLData
         {
 
         }
+        public DbSet<Book> Books { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Author> Authors { get; set; }
+        public DbSet<Order> Orders { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+
+        {
+            
+        }
     }
 }
