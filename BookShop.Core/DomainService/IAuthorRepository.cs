@@ -9,7 +9,7 @@ namespace BookShop.Core.DomainService
         Author CreateAuthor(Author author);
         Author Delete(Author author);
         Author Update(Author authorUpdate);
-        List<Author> GetAuthors();
-        Author ReadById(int Id);
+        IEnumerable<Author> GetAuthors();
+        Author GetAuthorByID(int Id);
     }
 }

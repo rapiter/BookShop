@@ -15,10 +15,14 @@ namespace BookShopRestApi
         public static void Main(string[] args)
         {
             CreateWebHostBuilder(args).Build().Run();
+            WebHost.CreateDefaultBuilder(args).UseSetting(WebHostDefaults.DetailedErrorsKey, "true");
+
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>();
+
+       
     }
 }

@@ -1,37 +1,50 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using BookShop.Core.DomainService;
 using BookShop.Core.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookShop.Infrastructure.SQLData.Repositories
 {
     public class AuthorRepository : IAuthorRepository
     {
-    
 
-        public List<Author> GetAuthors()
+        readonly BookShopAppContext context;
+
+        public AuthorRepository(BookShopAppContext ctx)
         {
-            throw new NotImplementedException();
+            context = ctx;
+        }
+        public IEnumerable<Author> GetAuthors()
+        {
+            return context.Authors;
         }
 
-        public Author ReadById(int Id)
+        public Author GetAuthorByID(int Id)
         {
-            throw new NotImplementedException();
+            return context.Authors.FirstOrDefault(a => a.ID == Id);
         }
 
         public Author Update(Author authorUpdate)
         {
-            throw new NotImplementedException();
+            context.Attach(authorUpdate).State = EntityState.Modified;
+            context.SaveChanges();
+            return authorUpdate;
         }
 
         public Author Delete(Author author)
         {
-            throw new NotImplementedException();
+            context.Authors.Remove(author);
+            context.SaveChanges();
+            return null;
         }
 
         public Author CreateAuthor(Author author)
         {
-            throw new NotImplementedException();
+            context.Attach(author).State = EntityState.Added;
+            context.SaveChanges();
+            return author;
         }
     }
 }

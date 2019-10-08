@@ -8,7 +8,6 @@ namespace BookShop.Core.ApplicationService
     {
         Book CreateNewBook(String title,
             Genre genre,
-            Author author,
             String description,
             String publisher,
             DateTime releaseDate,
@@ -21,7 +20,7 @@ namespace BookShop.Core.ApplicationService
         Book CreateBook(Book book);
         Book Delete(Book book);
         Book Update(Book bookUpdate);
-        Book ReadyById(int id);
+        Book GetBookByID(int id);
         IEnumerable<Book> GetBooks();
     }
 }

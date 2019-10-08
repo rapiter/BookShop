@@ -34,12 +34,12 @@ namespace BookShop.Core.ApplicationService.Implementation
             throw new NotImplementedException();
         }
 
-        public List<Author> GetAuthors()
+        public IEnumerable<Author> GetAuthors()
         {
             return AuthorRepository.GetAuthors();
         }
 
-        public Author ReadById(int Id)
+        public Author GetAuthorByID(int Id)
         {
             throw new NotImplementedException();
         }

@@ -10,7 +10,7 @@
            Order CreateOrder(Order Order);
            Order Delete(Order Order);
            Order Update(Order OrderUpdate);
-           List<Order> GetOrders();
-           Order ReadById(int Id);
+        IEnumerable<Order> GetOrders();
+           Order GetOrderByID(int Id);
        }
    }

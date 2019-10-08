@@ -10,7 +10,7 @@ namespace BookShop.Core.ApplicationService
         Customer CreateCustomer(Customer customer);
         Customer Delete(Customer customer);
         Customer Update(Customer customerUpdate);
-        List<Customer> GetAuthors();
-        Customer ReadById(int Id);
+        IEnumerable<Customer> GetCustomers();
+        Customer GetCustomerByID(int Id);
     }
 }

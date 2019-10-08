@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BookShop.Core.DomainService;
 using BookShop.Core.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookShop.Infrastructure.SQLData.Repositories
 {
@@ -17,27 +18,34 @@ namespace BookShop.Infrastructure.SQLData.Repositories
         }
         public Book CreateBook(Book book)
         {
-            throw new NotImplementedException();
+            context.Attach(book).State = EntityState.Added;
+            context.SaveChanges();
+            return book;
         }
 
         public Book Delete(Book book)
         {
-            throw new NotImplementedException();
+            context.Books.Remove(book);
+            context.SaveChanges();
+            return null;
         }
 
         public Book Update(Book bookUpdate)
         {
-            throw new NotImplementedException();
+            context.Attach(bookUpdate).State = EntityState.Modified;
+            context.SaveChanges();
+            return bookUpdate;
         }
 
-        public Book ReadyById(int id)
+        public Book GetBookByID(int id)
         {
-            throw new NotImplementedException();
+            return context.Books.FirstOrDefault(b => b.ID == id);
         }
 
         public IEnumerable<Book> GetBooks()
         {
             return context.Books.ToList();
+             //   .Include(b => b.Genre).ThenInclude(g => g.GenreType);
         }
     }
 }

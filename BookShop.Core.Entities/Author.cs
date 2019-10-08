@@ -5,10 +5,10 @@ namespace BookShop.Core.Entities
 {
     public class Author
     {
-        public String Firstname { get; set; }
-        public String Lastname { get; set; }
-        public int AuthorID { get; set; }
-        public String Description { get; set; }
+        public string Firstname { get; set; }
+        public string Lastname { get; set; }
+        public int ID { get; set; }
+        public string Description { get; set; }
         public DateTime Birthdate { get; set; }
         
         //Associaton to Book(s)

@@ -15,10 +15,16 @@ namespace BookShop.Core.ApplicationService.Implementation
         }
         
         
-        public Book CreateNewBook(string title, Genre genre, Author author, string description, string publisher, DateTime releaseDate,
+        public Book CreateNewBook(string title, Genre genre, string description, string publisher, DateTime releaseDate,
             int nrOfPages,double price, string language, double rating, string ageRange)
         {
-            throw new NotImplementedException();
+            Book b = new Book()
+            {
+                Title = title,
+                Genre = genre,
+
+            };
+            return b;
         }
 
         public Book CreateBook(Book book)
@@ -36,7 +42,7 @@ namespace BookShop.Core.ApplicationService.Implementation
             throw new NotImplementedException();
         }
 
-        public Book ReadyById(int id)
+        public Book GetBookByID(int id)
         {
             throw new NotImplementedException();
         }

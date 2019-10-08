@@ -44,11 +44,11 @@ namespace BookShopRestApi
                               opt.UseSqlite("Data Source=BookShopSQLite.db");
                           });
                 }
-                else
+                else if(Environment.IsProduction())
                 {
                     // Azure SQL database:
                     services.AddDbContext<BookShopAppContext>(opt =>
-                    opt.UseSqlServer(Configuration.GetConnectionString("defaultConnection")));
+                    opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
                 }
 
               services.AddScoped<IBookService, BookService>();
@@ -73,14 +73,15 @@ namespace BookShopRestApi
             // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
             public void Configure(IApplicationBuilder app, IHostingEnvironment env)
             {
-                app.UseDeveloperExceptionPage();
-
-                if (env.IsDevelopment())
+            app.UseAuthentication();
+            app.UseDeveloperExceptionPage();
+          
+            if (env.IsDevelopment())
                 {
                     using (var scope = app.ApplicationServices.CreateScope())
                     {
 
-                        var ctx = scope.ServiceProvider.GetService<BookShopAppContext>();
+                        var ctx = scope.ServiceProvider.GetRequiredService<BookShopAppContext>();
                         //ctx.Database.EnsureCreated();
                         DbInitializer.SeedDB(ctx);
 
@@ -88,14 +89,14 @@ namespace BookShopRestApi
                     app.UseDeveloperExceptionPage();
 
                 }
-                else
+                else if(env.IsProduction())
                 {
                     using (var scope = app.ApplicationServices.CreateScope())
                     {
 
-                        var ctx = scope.ServiceProvider.GetService<BookShopAppContext>();
-                        ctx.Database.EnsureCreated();
-                        //  DBInitializer.SeedDB(ctx);
+                        var ctx = scope.ServiceProvider.GetRequiredService<BookShopAppContext>();
+                        //ctx.Database.EnsureCreated();
+                          DbInitializer.SeedDB(ctx);
                     }
                     app.UseHsts();
                 }

@@ -20,12 +20,12 @@ namespace BookShop.Core.ApplicationService.Implementation
             throw new System.NotImplementedException();
         }
 
-        public List<Order> GetOrders()
+        public IEnumerable<Order> GetOrders()
         {
             throw new System.NotImplementedException();
         }
 
-        public Order ReadById(int Id)
+        public Order GetOrderByID(int Id)
         {
             throw new System.NotImplementedException();
         }
