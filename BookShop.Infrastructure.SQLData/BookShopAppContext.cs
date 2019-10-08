@@ -26,10 +26,7 @@ namespace BookShop.Infrastructure.SQLData
             modelBuilder.Entity<Book>().
                  HasData(new Book() { ID=1,Title = "Sad story", Genre = new Genre() { ID = 13 }, Price = 199.9, Description = "Very sad story of author." });
                  */
-                
-                
 
-            
             modelBuilder.Entity<BookAuthor>()
                 .HasKey(ba => new { ba.AuthorId, ba.BookId});
 
@@ -43,7 +40,9 @@ namespace BookShop.Infrastructure.SQLData
                 .WithMany(b => b.AuthorBooks)
                 .HasForeignKey(ba => ba.BookId);
 
-    
+          
+
+
         }
     }
 

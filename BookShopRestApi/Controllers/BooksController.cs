@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BookShop.Core.ApplicationService;
 using BookShop.Core.ApplicationService.Implementation;
@@ -20,15 +21,33 @@ namespace BookShopRestApi.Controllers
         }
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<Book>> Get()
+        public ActionResult<IEnumerable<Book>> Get([FromQuery] Filter filter)
         {
-           return _bookService.GetBooks().ToList();
+            try
+            {
+                return Ok(_bookService.GetFilteredBooks(filter).ToList());
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
         // GET api/values/5
         [HttpGet("{id}")]
         public ActionResult<Book> Get(int id)
         {
-            return _bookService.GetBookByID(id);
+            if (id < 1) return BadRequest("ID cannot be less than 1.");
+            
+            try
+            {
+                return Ok(_bookService.GetBookByID(id));
+
+            }
+            catch (Exception e)
+            {
+                return StatusCode(404, e.Message);
+
+            }
         }
 
         // POST api/values
@@ -46,23 +65,15 @@ namespace BookShopRestApi.Controllers
             {
                 return BadRequest("Parameter ID and Book ID must be the same.");
             }
-            Ok("Book was successfully updated.");
-            return _bookService.Update(book);
+            return Ok(_bookService.Update(book));
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
         public ActionResult<Book> Delete(int id)
         {
-            Book b = _bookService.GetBookByID(id);
-
-            if (null == b)
-                return BadRequest("There is no book with this ID.");
-            else
-            {
-                _bookService.Delete(b);
-                return Ok("Book deleted");
-            }
+            var toRemove = _bookService.Delete(id);
+            return toRemove == null ? StatusCode(404, $"Book {id}  not found") : Ok($"{id} deleted");
         }
     }
 

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using BookShop.Core.DomainService;
 using BookShop.Core.Entities;
 
@@ -7,49 +9,57 @@ namespace BookShop.Core.ApplicationService.Implementation
 {
     public class BookService : IBookService
     {
-        private IBookRepository BookRepository;
+        private readonly IBookRepository _bookRepository;
 
         public BookService(IBookRepository bookRepository)
         {
-            BookRepository = bookRepository;
+            _bookRepository = bookRepository;
         }
         
         
         public Book CreateNewBook(string title, Genre genre, string description, string publisher, DateTime releaseDate,
             int nrOfPages,double price, string language, double rating, string ageRange)
         {
-            Book b = new Book()
+            var b = new Book()
             {
                 Title = title,
                 Genre = genre,
-
             };
-            return b;
+            IsNullOrEmpty.Check(b);
+            return _bookRepository.CreateBook(b);
         }
 
         public Book CreateBook(Book book)
         {
-            throw new NotImplementedException();
+            IsNullOrEmpty.Check(book);
+            return _bookRepository.CreateBook(book);
         }
 
-        public Book Delete(Book book)
+        public Book Delete(int id)
         {
-            throw new NotImplementedException();
+            return _bookRepository.Delete(id) == null ? throw new InvalidDataException("Book not found or already deleted")
+                : _bookRepository.Delete(id);
         }
 
         public Book Update(Book bookUpdate)
         {
-            throw new NotImplementedException();
+            return _bookRepository.Update(bookUpdate);
         }
 
         public Book GetBookByID(int id)
         {
-            throw new NotImplementedException();
+            return _bookRepository.GetBookByID(id) == null ? throw new InvalidDataException("Book not found")
+                : _bookRepository.GetBookByID(id);
         }
 
         public IEnumerable<Book> GetBooks()
         {
-            return BookRepository.GetBooks();
+            return _bookRepository.GetBooks();
+        }
+
+        public IEnumerable<Book> GetFilteredBooks(Filter filter)
+        {
+            return _bookRepository.GetBooks(filter);
         }
     }
 }

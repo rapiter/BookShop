@@ -12,5 +12,8 @@
            Order Update(Order OrderUpdate);
         IEnumerable<Order> GetOrders();
            Order GetOrderByID(int Id);
+           
+           IEnumerable<Order> GetFilteredOrders(Filter filter);
+
        }
    }

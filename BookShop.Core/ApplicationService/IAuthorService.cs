@@ -8,9 +8,11 @@ namespace BookShop.Core.ApplicationService
     {
         Author CreateNewAuthor(String firstName, String lastName, DateTime birthDate);
         Author CreateAuthor(Author author);
-        Author Delete(Author author);
+        Author Delete(int id);
         Author Update(Author authorUpdate);
         IEnumerable<Author> GetAuthors();
         Author GetAuthorByID(int Id);
+        IEnumerable<Author> GetFilteredAuthors(Filter filter);
+
     }
 }

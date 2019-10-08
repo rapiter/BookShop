@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BookShop.Core.ApplicationService;
 using BookShop.Core.ApplicationService.Implementation;
@@ -22,13 +23,32 @@ namespace BookShopRestApi.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Author>> Get()
         {
+            try
+            {
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
             return _authorService.GetAuthors().ToList();
         }
         // GET api/values/5
         [HttpGet("{id}")]
         public ActionResult<Author> Get(int id)
         {
-            return _authorService.GetAuthorByID(id);
+            if (id < 1) return BadRequest("ID cannot be less than 1.");
+
+            try
+            {
+                return Ok(_authorService.GetAuthorByID(id));
+            }
+            catch (Exception e)
+            {
+                return StatusCode(404, e.Message);
+            }
+            
         }
 
         // POST api/values
@@ -46,23 +66,16 @@ namespace BookShopRestApi.Controllers
             {
                 return BadRequest("Parameter ID and Author ID must be the same.");
             }
-            Ok("Author was successfully updated.");
-            return _authorService.Update(author);
+           
+            return Ok(_authorService.Update(author));
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
         public ActionResult<Author> Delete(int id)
         {
-            Author a = _authorService.GetAuthorByID(id);
-
-            if (null == a)
-                return BadRequest("There is no Author with this ID.");
-            else
-            {
-                _authorService.Delete(a);
-                return Ok("Author deleted");
-            }
+            var toRemove = _authorService.Delete(id);
+            return toRemove == null ? StatusCode(404, $"Author {id}  not found") : Ok($"{id} deleted");
         }
     }
 

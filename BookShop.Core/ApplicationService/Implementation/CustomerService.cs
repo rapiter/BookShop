@@ -1,38 +1,52 @@
 ﻿using System.Collections.Generic;
+using BookShop.Core.DomainService;
 using BookShop.Core.Entities;
 
 namespace BookShop.Core.ApplicationService.Implementation
 {
+    
     public class CustomerService : ICustomerService
     {
+        private readonly ICustomerRepository _customerRepository;
+
+        public CustomerService(ICustomerRepository customerRepository)
+        {
+            _customerRepository = customerRepository;
+        }
+        
         public Customer CreateCustomer(Customer customer)
         {
-            throw new System.NotImplementedException();
+            return _customerRepository.CreateCustomer(customer);
         }
 
         public Customer CreateNewCustomer(string firstName, string lastName)
         {
-            throw new System.NotImplementedException();
+            var c = new Customer()
+            {
+                FirstName = firstName,
+                SurnameName = lastName
+            };
+            return c;
         }
 
         public Customer Delete(Customer customer)
         {
-            throw new System.NotImplementedException();
+            return _customerRepository.Delete(customer);
         }
 
         public IEnumerable<Customer> GetCustomers()
         {
-            throw new System.NotImplementedException();
+            return _customerRepository.GetCustomers();
         }
 
-        public Customer GetCustomerByID(int Id)
+        public Customer GetCustomerByID(int id)
         {
-            throw new System.NotImplementedException();
+            return _customerRepository.GetCustomerByID(id);
         }
 
         public Customer Update(Customer customerUpdate)
         {
-            throw new System.NotImplementedException();
+            return _customerRepository.Update(customerUpdate);
         }
     }
 }

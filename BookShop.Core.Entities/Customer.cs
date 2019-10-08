@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace BookShop.Core.Entities
 {
@@ -7,5 +8,7 @@ namespace BookShop.Core.Entities
         public int ID { get; set; }
         public string FirstName { get; set; }
         public string SurnameName { get; set; }
+        
+        public List<Order> Orders { get; set; }
     }
 }

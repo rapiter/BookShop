@@ -24,14 +24,14 @@ namespace BookShop.Infrastructure.SQLData
             ctx.Authors.Add(new Author() { Firstname = "John", Lastname = "Ray", Birthdate = DateTime.Now, Description = "Cool author" });
             ctx.Authors.Add(new Author() { Firstname = "John", Lastname = "Ray", Birthdate = DateTime.Now, Description = "Cool author" });
 
-
+            //Creating Customers
+            ctx.Customers.Add(new Customer() {FirstName = "Freddy", SurnameName = "Krueger"});
 
             //Creating Genres
-            List<Genre> genres = createGenres();
+            var genres = CreateGenres();
                 ctx.Genres.AddRange(genres);
-
-
-            List<Book> books = new List<Book>();
+                
+            var books = new List<Book>();
             var b = new Book() { Title = "Sad story", Genre = genres.FirstOrDefault(g => g.GenreType.Equals("Horror")), Price = 199.9, Description = "Very sad story of author." };
             var b2 = new Book() { Title = "Sad story 2", Genre = genres.FirstOrDefault(g => g.GenreType.Equals("Horror")), Price = 199.9, Description = "Very sad story of author part 2." };
             var b3 = new Book() { Title = "Sad story 3", Genre = genres.FirstOrDefault(g => g.GenreType.Equals("Horror")), Price = 199.9, Description = "Very sad story of author part 3." };
@@ -39,6 +39,8 @@ namespace BookShop.Infrastructure.SQLData
             books.Add(b2);
             books.Add(b3);
            
+            //Creating Order
+            //ctx.Orders.Add(new Order() {Products = new List<Book>(){b}, CustomerI});
 
             List<BookAuthor> l = new List<BookAuthor>();
       
@@ -46,11 +48,10 @@ namespace BookShop.Infrastructure.SQLData
 
             ctx.BookAuthors.AddRange(l);
             ctx.Books.AddRange(books);
-
             ctx.SaveChanges();
         }
 
-        static List<Genre> createGenres()
+        static List<Genre> CreateGenres()
         {
             List<Genre> gList = new List<Genre>();
             Genre g = new Genre() { GenreType = "Science Fiction" }; gList.Add(g);

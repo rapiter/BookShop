@@ -62,35 +62,33 @@ namespace BookShopRestApi
               services.AddScoped<ICustomerRepository, CustomerRepository>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-                services.AddMvc().AddJsonOptions(options => {
-                    options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            
+            services.AddMvc().AddJsonOptions(options => {
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-
-                });
+                    options.SerializerSettings.MaxDepth = 3;
+            });
 
             }
 
             // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
             public void Configure(IApplicationBuilder app, IHostingEnvironment env)
             {
-            app.UseAuthentication();
-            app.UseDeveloperExceptionPage();
           
             if (env.IsDevelopment())
                 {
+                 app.UseDeveloperExceptionPage();
                     using (var scope = app.ApplicationServices.CreateScope())
                     {
-
                         var ctx = scope.ServiceProvider.GetRequiredService<BookShopAppContext>();
-                        //ctx.Database.EnsureCreated();
+                        ctx.Database.EnsureDeleted();
+                        ctx.Database.EnsureCreated();
                         DbInitializer.SeedDB(ctx);
 
                     }
-                    app.UseDeveloperExceptionPage();
-
                 }
                 else if(env.IsProduction())
                 {
+                    app.UseHsts();
                     using (var scope = app.ApplicationServices.CreateScope())
                     {
 
@@ -98,7 +96,6 @@ namespace BookShopRestApi
                         ctx.Database.EnsureCreated();
                         //  DbInitializer.SeedDB(ctx);
                     }
-                    app.UseHsts();
                 }
 
                 app.UseHttpsRedirection();

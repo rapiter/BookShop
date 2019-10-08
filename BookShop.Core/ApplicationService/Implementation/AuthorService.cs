@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using BookShop.Core.DomainService;
 using BookShop.Core.Entities;
 
@@ -7,41 +8,54 @@ namespace BookShop.Core.ApplicationService.Implementation
 {
     public class AuthorService : IAuthorService
     {
-        private IAuthorRepository AuthorRepository;
+        private readonly IAuthorRepository _authorRepository;
         
         public AuthorService(IAuthorRepository authorRepository)
         {
-            AuthorRepository = authorRepository;
+            _authorRepository = authorRepository;
         }
 
         public Author CreateNewAuthor(string firstName, string lastName, DateTime birthDate)
         {
-            throw new NotImplementedException();
+            var a = new Author()
+            {
+                Firstname = firstName,
+                Lastname = lastName,
+                Birthdate = birthDate
+            };
+            IsNullOrEmpty.Check(a);
+            return _authorRepository.CreateAuthor(a);
         }
 
         public Author CreateAuthor(Author author)
         {
-            throw new NotImplementedException();
+            IsNullOrEmpty.Check(author);
+            return _authorRepository.CreateAuthor(author);
         }
 
-        public Author Delete(Author author)
+        public Author Delete(int id)
         {
-            throw new NotImplementedException();
+            return _authorRepository.Delete(id);
         }
 
         public Author Update(Author authorUpdate)
         {
-            throw new NotImplementedException();
+            return _authorRepository.Update(authorUpdate);
         }
 
         public IEnumerable<Author> GetAuthors()
         {
-            return AuthorRepository.GetAuthors();
+            return _authorRepository.GetAuthors();
         }
 
-        public Author GetAuthorByID(int Id)
+        public Author GetAuthorByID(int id)
         {
-            throw new NotImplementedException();
+            return _authorRepository.GetAuthorByID(id);
+        }
+        
+        public IEnumerable<Author> GetFilteredAuthors(Filter filter)
+        {
+            return _authorRepository.GetAuthors(filter).ToList();
         }
     }
 }

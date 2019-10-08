@@ -9,42 +9,40 @@ namespace BookShop.Infrastructure.SQLData.Repositories
 {
     public class CustomerRepository : ICustomerRepository
     {
-        readonly BookShopAppContext context;
+        readonly BookShopAppContext _context;
 
         public CustomerRepository(BookShopAppContext ctx)
         {
-            context = ctx;
+            _context = ctx;
         }
         public Customer CreateCustomer(Customer customer)
         {
-            context.Attach(customer).State = EntityState.Added;
-            context.SaveChanges();
+            _context.Attach(customer).State = EntityState.Added;
+            _context.SaveChanges();
             return customer;
         }
 
-       
-
         public Customer Delete(Customer customer)
         {
-            context.Customers.Remove(customer);
-            context.SaveChanges();
+            _context.Customers.Remove(customer);
+            _context.SaveChanges();
             return null;
         }
 
         public IEnumerable<Customer> GetCustomers()
         {
-            return context.Customers;
+            return _context.Customers;
         }
 
         public Customer GetCustomerByID(int Id)
         {
-            return context.Customers.FirstOrDefault(c => c.ID == Id);
+            return _context.Customers.FirstOrDefault(c => c.ID == Id);
         }
 
         public Customer Update(Customer customerUpdate)
         {
-            context.Attach(customerUpdate).State = EntityState.Modified;
-            context.SaveChanges();
+            _context.Attach(customerUpdate).State = EntityState.Modified;
+            _context.SaveChanges();
             return customerUpdate;
         }
     }

@@ -8,7 +8,7 @@ namespace BookShop.Core.DomainService
          Order CreateOrder(Order Order);
         Order Delete(Order Order);
         Order Update(Order OrderUpdate);
-        IEnumerable<Order> GetOrders();
+        IEnumerable<Order> GetOrders(Filter filter = null);
         Order GetOrderByID(int Id);
     }
 }

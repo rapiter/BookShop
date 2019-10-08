@@ -5,34 +5,50 @@ namespace BookShop.Core.ApplicationService.Implementation
 {
     public class OrderService : IOrderService
     {
-        public Order CreateNewOrder(int CustomerId, List<Book> Books)
+        private readonly IOrderService _orderService;
+
+        public OrderService(IOrderService orderService)
         {
-            throw new System.NotImplementedException();
+            _orderService = orderService;
+        }
+        public Order CreateNewOrder(int customerId, List<Book> books)
+        {
+            var o = new Order()
+            {
+                CustomerId = customerId,
+                Products = books
+            };
+            return o;
         }
 
-        public Order CreateOrder(Order Order)
+        public Order CreateOrder(Order order)
         {
-            throw new System.NotImplementedException();
+            return _orderService.CreateOrder(order);
         }
 
-        public Order Delete(Order Order)
+        public Order Delete(Order order)
         {
-            throw new System.NotImplementedException();
+            return _orderService.Delete(order);
         }
 
         public IEnumerable<Order> GetOrders()
         {
-            throw new System.NotImplementedException();
+            return _orderService.GetOrders();
         }
 
-        public Order GetOrderByID(int Id)
+        public Order GetOrderByID(int id)
         {
-            throw new System.NotImplementedException();
+            return _orderService.GetOrderByID(id);
         }
 
-        public Order Update(Order OrderUpdate)
+        public IEnumerable<Order> GetFilteredOrders(Filter filter)
         {
-            throw new System.NotImplementedException();
+            return _orderService.GetFilteredOrders(filter);
+        }
+
+        public Order Update(Order orderUpdate)
+        {
+            return _orderService.Update(orderUpdate);
         }
     }
 }

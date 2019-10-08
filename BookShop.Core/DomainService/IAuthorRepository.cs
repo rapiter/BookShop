@@ -7,9 +7,9 @@ namespace BookShop.Core.DomainService
     public interface IAuthorRepository
     {
         Author CreateAuthor(Author author);
-        Author Delete(Author author);
+        Author Delete(int id);
         Author Update(Author authorUpdate);
-        IEnumerable<Author> GetAuthors();
+        IEnumerable<Author> GetAuthors(Filter filter = null);
         Author GetAuthorByID(int Id);
     }
 }
