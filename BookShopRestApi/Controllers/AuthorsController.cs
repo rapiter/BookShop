@@ -21,18 +21,16 @@ namespace BookShopRestApi.Controllers
         }
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<Author>> Get()
+        public ActionResult<IEnumerable<Author>> Get([FromQuery] Filter filter)
         {
             try
             {
-
+                return Ok(_authorService.GetFilteredAuthors(filter).ToList());
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                throw;
+                return BadRequest(e.Message);
             }
-            return _authorService.GetAuthors().ToList();
         }
         // GET api/values/5
         [HttpGet("{id}")]
