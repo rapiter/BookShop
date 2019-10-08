@@ -25,19 +25,20 @@ namespace BookShop.Infrastructure.SQLData
             ctx.Authors.Add(new Author() { Firstname = "John", Lastname = "Ray", Birthdate = DateTime.Now, Description = "Cool author" });
 
 
+
             //Creating Genres
             List<Genre> genres = createGenres();
-            ctx.Genres.AddRange(genres);
-
+                ctx.Genres.AddRange(genres);
 
 
             List<Book> books = new List<Book>();
-            var b = new Book() { Title = "Sad story", Genre = genres.FirstOrDefault(g => g.ID == 13), Price = 199.9, Description = "Very sad story of author." };
-            var b2 = new Book() { Title = "Sad story 2", Genre = genres.FirstOrDefault(g => g.ID == 12), Price = 199.9, Description = "Very sad story of author part 2." };
-            var b3 = new Book() { Title = "Sad story 3", Genre = genres.FirstOrDefault(g => g.ID == 11), Price = 199.9, Description = "Very sad story of author part 3." };
+            var b = new Book() { Title = "Sad story", Genre = genres.FirstOrDefault(g => g.GenreType.Equals("Horror")), Price = 199.9, Description = "Very sad story of author." };
+            var b2 = new Book() { Title = "Sad story 2", Genre = genres.FirstOrDefault(g => g.GenreType.Equals("Horror")), Price = 199.9, Description = "Very sad story of author part 2." };
+            var b3 = new Book() { Title = "Sad story 3", Genre = genres.FirstOrDefault(g => g.GenreType.Equals("Horror")), Price = 199.9, Description = "Very sad story of author part 3." };
             books.Add(b);
             books.Add(b2);
             books.Add(b3);
+           
 
             List<BookAuthor> l = new List<BookAuthor>();
       
@@ -53,7 +54,6 @@ namespace BookShop.Infrastructure.SQLData
         {
             List<Genre> gList = new List<Genre>();
             Genre g = new Genre() { GenreType = "Science Fiction" }; gList.Add(g);
-            Genre g2 = new Genre() { GenreType = "Romance" }; gList.Add(g2);
             Genre g3 = new Genre() { GenreType = "Fantasy" }; gList.Add(g3);
             Genre g4 = new Genre() { GenreType = "Crime" }; gList.Add(g4);
             Genre g5 = new Genre() { GenreType = "Horror" }; gList.Add(g5);

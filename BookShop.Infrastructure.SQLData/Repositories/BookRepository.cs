@@ -44,8 +44,8 @@ namespace BookShop.Infrastructure.SQLData.Repositories
 
         public IEnumerable<Book> GetBooks()
         {
-            return context.Books.ToList();
-             //   .Include(b => b.Genre).ThenInclude(g => g.GenreType);
+            return context.Books;
+               //.Include(b => b.Genre.GenreType);
         }
     }
 }

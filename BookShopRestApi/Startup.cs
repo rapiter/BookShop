@@ -95,8 +95,8 @@ namespace BookShopRestApi
                     {
 
                         var ctx = scope.ServiceProvider.GetRequiredService<BookShopAppContext>();
-                        //ctx.Database.EnsureCreated();
-                          DbInitializer.SeedDB(ctx);
+                        ctx.Database.EnsureCreated();
+                        //  DbInitializer.SeedDB(ctx);
                     }
                     app.UseHsts();
                 }
