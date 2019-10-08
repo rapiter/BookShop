@@ -8,22 +8,23 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BookShopRestApi.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class BooksController: ControllerBase
     {
-        private readonly IBookService bookService;
+        private readonly IBookService _bookService;
 
-        public BooksController(IBookService _bookService)
+        public BooksController(IBookService bookService)
         {
-            bookService = _bookService;
+            _bookService = bookService;
         }
         // GET api/values
         [HttpGet]
         public ActionResult<IEnumerable<Book>> Get()
         {
-            return bookService.GetBooks().ToList();
-
+                       return _bookService.GetBooks().ToList();
+          //  return new string[] { "value1", "value2" };
         }
-
         // GET api/values/5
         [HttpGet("{id}")]
         public ActionResult<string> Get(int id)
