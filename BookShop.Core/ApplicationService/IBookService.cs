@@ -8,14 +8,15 @@ namespace BookShop.Core.ApplicationService
     {
         Book CreateNewBook(String title,
             Genre genre,
-            String description,
-            String publisher,
+            string description,
+            string publisher,
             DateTime releaseDate,
             int nrOfPages,
             double price,
-            String language,
-            Double rating,
-            String ageRange);
+            string language,
+            double rating,
+            string ageRange,
+            List<Author> authors);
         
         Book CreateBook(Book book);
         Book Delete(int ID);

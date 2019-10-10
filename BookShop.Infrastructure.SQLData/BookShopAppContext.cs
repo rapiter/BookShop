@@ -13,33 +13,15 @@ namespace BookShop.Infrastructure.SQLData
         }
         public DbSet<Book> Books { get; set; }
         public DbSet<Customer> Customers { get; set; }
-        public DbSet<Genre> Genres { get; set; }
         public DbSet<Author> Authors { get; set; }
         public DbSet<Order> Orders { get; set; }
 
-        public DbSet<BookAuthor> BookAuthors { get; set; }
+        public DbSet<Genre> Genres { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
 
         {
-            /*
-            modelBuilder.Entity<Book>().
-                 HasData(new Book() { ID=1,Title = "Sad story", Genre = new Genre() { ID = 13 }, Price = 199.9, Description = "Very sad story of author." });
-                 */
-
-            modelBuilder.Entity<BookAuthor>()
-                .HasKey(ba => new { ba.AuthorId, ba.BookId});
-
-            modelBuilder.Entity<BookAuthor>()
-                .HasOne(ba => ba.Author)
-                .WithMany(a => a.AuthorBooks)
-                .HasForeignKey(ba => ba.AuthorId);
-
-            modelBuilder.Entity<BookAuthor>()
-                .HasOne(ba => ba.Book)
-                .WithMany(b => b.AuthorBooks)
-                .HasForeignKey(ba => ba.BookId);
-
+   
           
 
 

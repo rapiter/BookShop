@@ -17,8 +17,7 @@ namespace BookShop.Core.Entities
         public double Rating { get; set; }
         public string AgeRange { get; set; }
         
-        //Association to Author(s)
-        public virtual ICollection<BookAuthor> AuthorBooks { get; set; }
+        public List<Author> authors { get; set; }
 
     }
 }

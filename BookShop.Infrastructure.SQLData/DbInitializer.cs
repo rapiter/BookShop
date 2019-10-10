@@ -49,11 +49,11 @@ namespace BookShop.Infrastructure.SQLData
             //Creating Order
             ctx.Orders.Add(new Order() {Products = new List<Book>(){b}, CustomerId = 1});
 
-            List<BookAuthor> l = new List<BookAuthor>();
+           // List<BookAuthor> l = new List<BookAuthor>();
       
 
 
-            ctx.BookAuthors.AddRange(l);
+           //ctx.BookAuthors.AddRange(l);
             ctx.Books.AddRange(books);
             ctx.SaveChanges();
         }

@@ -52,14 +52,17 @@ namespace BookShop.Infrastructure.SQLData.Repositories
 
         public Book Update(Book bookUpdate)
         {
+          
+
             _context.Attach(bookUpdate).State = EntityState.Modified;
+            _context.Entry(bookUpdate).Reference(b => b.authors).IsModified = true;
             _context.SaveChanges();
             return bookUpdate;
         }
 
         public Book GetBookByID(int id)
         {
-            return _context.Books.FirstOrDefault(b => b.ID == id);
+            return _context.Books.Include(b=>b.authors).FirstOrDefault(b => b.ID == id);
         }
 
         public IEnumerable<Book> GetBooks(Filter filter)
