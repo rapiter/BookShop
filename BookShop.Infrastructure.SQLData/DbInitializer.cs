@@ -11,7 +11,7 @@ namespace BookShop.Infrastructure.SQLData
     {
         public static void SeedDB(BookShopAppContext ctx)
         {
-            //ctx.Database.EnsureDeleted();
+
             ctx.Database.EnsureCreated();
             
             if (ctx.Books.Any())
@@ -32,15 +32,22 @@ namespace BookShop.Infrastructure.SQLData
                 ctx.Genres.AddRange(genres);
                 
             var books = new List<Book>();
-            var b = new Book() { Title = "Sad story", Genre = genres.FirstOrDefault(g => g.GenreType.Equals("Horror")), Price = 199.9, Description = "Very sad story of author." };
-            var b2 = new Book() { Title = "Sad story 2", Genre = genres.FirstOrDefault(g => g.GenreType.Equals("Horror")), Price = 199.9, Description = "Very sad story of author part 2." };
-            var b3 = new Book() { Title = "Sad story 3", Genre = genres.FirstOrDefault(g => g.GenreType.Equals("Horror")), Price = 199.9, Description = "Very sad story of author part 3." };
+            var b = new Book() { Title = "Sad story", Genre = genres.FirstOrDefault(g => g.GenreType.Equals("Horror")), Price = 399.9, Description = "Very sad story of author." };
+            var b2 = new Book() { Title = "Sad story 2", Genre = genres.FirstOrDefault(g => g.GenreType.Equals("Horror")), Price = 149.9, Description = "Very sad story of author part 2." };
+            var b3 = new Book() { Title = "Sad story 3", Genre = genres.FirstOrDefault(g => g.GenreType.Equals("Horror")), Price = 99.9, Description = "Very sad story of author part 3." };
+            var b4 = new Book() { Title = "Sad story 4", Genre = genres.FirstOrDefault(g => g.GenreType.Equals("Horror")), Price = 599.9, Description = "Very sad story of author part 4." };
+            var b5 = new Book() { Title = "Sad story 5", Genre = genres.FirstOrDefault(g => g.GenreType.Equals("Horror")), Price = 59.9, Description = "Very sad story of author part 5." };
+            var b6 = new Book() { Title = "Sad story 6", Genre = genres.FirstOrDefault(g => g.GenreType.Equals("Horror")), Price = 699.9, Description = "Very sad story of author part 6." };
             books.Add(b);
             books.Add(b2);
             books.Add(b3);
-           
+            books.Add(b4);
+            books.Add(b5);
+            books.Add(b6);
+            
+
             //Creating Order
-            //ctx.Orders.Add(new Order() {Products = new List<Book>(){b}, CustomerI});
+            ctx.Orders.Add(new Order() {Products = new List<Book>(){b}, CustomerId = 1});
 
             List<BookAuthor> l = new List<BookAuthor>();
       

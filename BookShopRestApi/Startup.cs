@@ -55,25 +55,38 @@ namespace BookShopRestApi
               services.AddScoped<IAuthorService, AuthorService>();
               services.AddScoped<ICustomerService, CustomerService>();
               services.AddScoped<IOrderService, OrderService>();
-
+              services.AddScoped<IGenreService, GenreService>();
               services.AddScoped<IBookRepository, BookRepository>();
               services.AddScoped<IAuthorRepository, AuthorRepository>();
               services.AddScoped<IOrderRepository, OrderRepository>();
               services.AddScoped<ICustomerRepository, CustomerRepository>();
-
+              services.AddScoped<IGenreRepository, GenreRepository>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             
             services.AddMvc().AddJsonOptions(options => {
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                     options.SerializerSettings.MaxDepth = 3;
             });
+            
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowSpecificOrigin",
+                    builder => builder
+                        .AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()
+                    /* .WithOrigins("").AllowAnyHeader().AllowAnyMethod()
+                     .WithOrigins("").AllowAnyHeader().AllowAnyMethod()
+                     .WithOrigins("").AllowAnyHeader().AllowAnyMethod() */
+                    ) ;
+            });
+            
 
-            }
+        }
 
             // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
             public void Configure(IApplicationBuilder app, IHostingEnvironment env)
             {
-          
+            app.UseCors("AllowSpecificOrigin");
+
             if (env.IsDevelopment())
                 {
                  app.UseDeveloperExceptionPage();

@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BookShop.Core.ApplicationService;
-using BookShop.Core.ApplicationService.Implementation;
 using BookShop.Core.Entities;
-using BookShop.Infrastructure.SQLData.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookShopRestApi.Controllers
@@ -20,9 +18,9 @@ namespace BookShopRestApi.Controllers
         }
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<Order>> Get()
+        public ActionResult<IEnumerable<Order>> Get([FromQuery] Filter filter)
         {
-            return _orderService.GetOrders().ToList();
+            return _orderService.GetFilteredOrders(filter).ToList();
         }
         // GET api/values/5
         [HttpGet("{id}")]

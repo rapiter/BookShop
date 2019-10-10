@@ -27,8 +27,26 @@ namespace BookShop.Infrastructure.SQLData.Repositories
 
         public Book Delete(int id)
         {
-            var bookToRemove = _context.Remove(new Book {ID = id}).Entity;
-            _context.SaveChanges();
+           var bookToRemove = new Book {ID = id};
+            _context.Entry(bookToRemove).State = EntityState.Deleted;
+
+            try
+
+            {
+
+                _context.SaveChanges();
+
+            }
+
+            catch (DbUpdateConcurrencyException ex)
+
+            {
+
+                ex.Entries.Single().Reload();
+
+               _context.SaveChanges();
+
+            }
             return bookToRemove;
         }
 

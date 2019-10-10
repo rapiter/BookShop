@@ -1,15 +1,16 @@
 ﻿using System.Collections.Generic;
+using BookShop.Core.DomainService;
 using BookShop.Core.Entities;
 
 namespace BookShop.Core.ApplicationService.Implementation
 {
     public class OrderService : IOrderService
     {
-        private readonly IOrderService _orderService;
+        private readonly IOrderRepository _orderRepository;
 
-        public OrderService(IOrderService orderService)
+        public OrderService(IOrderRepository orderRepository)
         {
-            _orderService = orderService;
+            _orderRepository = orderRepository;
         }
         public Order CreateNewOrder(int customerId, List<Book> books)
         {
@@ -23,32 +24,32 @@ namespace BookShop.Core.ApplicationService.Implementation
 
         public Order CreateOrder(Order order)
         {
-            return _orderService.CreateOrder(order);
+            return _orderRepository.CreateOrder(order);
         }
 
         public Order Delete(Order order)
         {
-            return _orderService.Delete(order);
+            return _orderRepository.Delete(order);
         }
 
         public IEnumerable<Order> GetOrders()
         {
-            return _orderService.GetOrders();
+            return _orderRepository.GetOrders();
         }
 
         public Order GetOrderByID(int id)
         {
-            return _orderService.GetOrderByID(id);
+            return _orderRepository.GetOrderByID(id);
         }
 
         public IEnumerable<Order> GetFilteredOrders(Filter filter)
         {
-            return _orderService.GetFilteredOrders(filter);
+            return _orderRepository.GetOrders(filter);
         }
 
         public Order Update(Order orderUpdate)
         {
-            return _orderService.Update(orderUpdate);
+            return _orderRepository.Update(orderUpdate);
         }
     }
 }

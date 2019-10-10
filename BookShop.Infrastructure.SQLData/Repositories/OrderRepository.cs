@@ -39,7 +39,7 @@ namespace BookShop.Infrastructure.SQLData.Repositories
             
             if (sortBy != null)
             {
-                var propertyInfo = typeof(Book).GetProperty(filter.SortBy, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+                var propertyInfo = typeof(Order).GetProperty(filter.SortBy, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
 
                 if(orderBy == "asc" || orderBy == null)
                 {
